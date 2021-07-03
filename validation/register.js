@@ -1,8 +1,6 @@
 const validator = require("validator");
 const isEmpty = require("./is-empty");
 
-// TODO: add password regex
-
 const validateRegisterInput = (data) => {
   let errors = {};
 
@@ -59,6 +57,17 @@ const isValidPassword = (errors, password, confirmPassword) => {
 
   if (!validator.isLength(password, { min: 6, max: 30 })) {
     errors.password = "Password must be between 6 and 30 characthers!";
+    return errors;
+  }
+
+  const regex = new RegExp(
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+,.\\\/;':"-]).{8,}$/
+  );
+
+  const validPassword = regex.test(password);
+  if (!validPassword) {
+    errors.password =
+      "Password must contain at least one special characther, contain a capital letter and be at least 8 charatchers long!";
     return errors;
   }
 
