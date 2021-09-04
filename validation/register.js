@@ -67,7 +67,7 @@ const isValidPassword = (errors, password, confirmPassword) => {
   const validPassword = regex.test(password);
   if (!validPassword) {
     errors.password =
-      "Password must contain at least one special characther, contain a capital letter and be at least 8 charatchers long!";
+      "Password must contain at least one special characther, a capital letter and be at least 8 charatchers long!";
     return errors;
   }
 
