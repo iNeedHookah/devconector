@@ -243,6 +243,15 @@
   width: 100%;
   padding: 0.4rem;
   font-size: 1.2rem;
+  /* border: 1px solid #ccc; */
+}
+
+.form input[type="text"]:not(.is-invalid),
+.form input[type="email"]:not(.is-invalid),
+.form input[type="password"]:not(.is-invalid),
+.form input[type="date"]:not(.is-invalid),
+.form select:not(.is-invalid),
+.form textarea:not(.is-invalid) {
   border: 1px solid #ccc;
 }
 .form input[type="submit"] {
@@ -546,5 +555,9 @@ img {
   .post a,
   .post button {
     padding: 0.3rem 0.4rem;
+  }
+
+  .is-invalid {
+    border: 1px solid red !important;
   }
 }
