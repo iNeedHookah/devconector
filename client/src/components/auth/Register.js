@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
 
 const Register = () => {
@@ -13,6 +14,7 @@ const Register = () => {
     errors: {},
   });
 
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   const onChange = (e) => {
@@ -35,7 +37,6 @@ const Register = () => {
       password: registerState.password,
       confirmPassword: registerState.confirmPassword,
     };
-
     dispatch(registerUser(newUser));
 
     // await axios
@@ -128,6 +129,11 @@ const Register = () => {
       </p>
     </section>
   );
+};
+
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 export default Register;
