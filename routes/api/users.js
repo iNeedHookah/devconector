@@ -70,7 +70,7 @@ router.post("/register", async (req, res) => {
     });
 });
 
-// @route  GET api/users/login
+// @route  POST api/users/login
 // @desc   Login user / Returning the JWT token
 // @access Public
 router.post("/login", async (req, res) => {

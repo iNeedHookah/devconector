@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
 
 const Register = () => {
-  const user = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
   const errors = useSelector((state) => state.errors);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -22,9 +22,13 @@ const Register = () => {
   useEffect(() => {
     setRegisterState((prevState) => ({
       ...prevState,
-      errors: errors,
+      errors,
     }));
-  }, [errors]);
+
+    if (auth.isAuthenticated) {
+      history.push("/dashboard");
+    }
+  }, [errors, auth]);
 
   const onChange = (e) => {
     setRegisterState((prevState) => ({
