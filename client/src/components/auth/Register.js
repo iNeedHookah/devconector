@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../redux/actions/authActions";
 
 const Register = () => {
   const [registerState, setRegisterState] = useState({
@@ -10,6 +12,8 @@ const Register = () => {
     confirmPassword: "",
     errors: {},
   });
+
+  const dispatch = useDispatch();
 
   const onChange = (e) => {
     setRegisterState((prevState) => ({
@@ -32,14 +36,16 @@ const Register = () => {
       confirmPassword: registerState.confirmPassword,
     };
 
-    await axios
-      .post("api/users/register", newUser)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        setRegisterState({ ...registerState, errors: err.response.data });
-      });
+    dispatch(registerUser(newUser));
+
+    // await axios
+    //   .post("api/users/register", newUser)
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((err) => {
+    //     setRegisterState({ ...registerState, errors: err.response.data });
+    //   });
   };
 
   return (
