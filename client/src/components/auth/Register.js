@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import axios from "axios";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
 
 const Register = () => {
+  const user = useSelector((state) => state.auth);
+  const errors = useSelector((state) => state.errors);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [registerState, setRegisterState] = useState({
     name: "",
     email: "",
@@ -14,8 +19,12 @@ const Register = () => {
     errors: {},
   });
 
-  const user = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    setRegisterState((prevState) => ({
+      ...prevState,
+      errors: errors,
+    }));
+  }, [errors]);
 
   const onChange = (e) => {
     setRegisterState((prevState) => ({
@@ -28,7 +37,7 @@ const Register = () => {
     );
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     const newUser = {
@@ -37,16 +46,8 @@ const Register = () => {
       password: registerState.password,
       confirmPassword: registerState.confirmPassword,
     };
-    dispatch(registerUser(newUser));
 
-    // await axios
-    //   .post("api/users/register", newUser)
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch((err) => {
-    //     setRegisterState({ ...registerState, errors: err.response.data });
-    //   });
+    dispatch(registerUser(newUser, history));
   };
 
   return (
@@ -133,7 +134,8 @@ const Register = () => {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 export default Register;
