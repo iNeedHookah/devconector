@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
+import TextFieldGroup from "../../common/TextFieldGroup";
 
 const Register = () => {
   const auth = useSelector((state) => state.auth);
@@ -61,72 +62,40 @@ const Register = () => {
         <i className="fas fa-user"></i> Create Your Account
       </p>
       <form noValidate onSubmit={onSubmit} className="form">
-        <input
+        <TextFieldGroup
           id="name"
           type="text"
           placeholder="Name"
           value={registerState.name}
           onChange={onChange}
-          className={`form-control form-control-lg ${
-            registerState.errors.name ? "is-invalid" : ""
-          }`}
+          error={registerState.errors.name}
         />
-        {registerState.errors.name && (
-          <div className="invalid-feedback">{registerState.errors.name}</div>
-        )}
-        <div className="form-group">
-          <input
-            id="email"
-            type="email"
-            placeholder="Email Address"
-            value={registerState.email}
-            onChange={onChange}
-            className={`form-control form-control-lg ${
-              registerState.errors.email ? "is-invalid" : ""
-            }`}
-          />
-          {registerState.errors.email && (
-            <div className="invalid-feedback">{registerState.errors.email}</div>
-          )}
-          <small className="form-text">
-            This site uses Gravatar, so if you want a profile image, use a
-            Gravatar email
-          </small>
-        </div>
-        <div className="form-group">
-          <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            value={registerState.password}
-            onChange={onChange}
-            className={`form-control form-control-lg ${
-              registerState.errors.password ? "is-invalid" : "test"
-            }`}
-          />
-          {registerState.errors.password && (
-            <div className="invalid-feedback">
-              {registerState.errors.password}
-            </div>
-          )}
-        </div>
-        <div className="form-group">
-          <input
-            id="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            value={registerState.confirmPassword}
-            onChange={onChange}
-            className={`form-control form-control-lg ${
-              registerState.errors.confirmPassword ? "is-invalid" : ""
-            }`}
-          />
-          {registerState.errors.confirmPassword && (
-            <div className="invalid-feedback">
-              {registerState.errors.confirmPassword}
-            </div>
-          )}
-        </div>
+        <TextFieldGroup
+          id="email"
+          type="email"
+          placeholder="Email Address"
+          value={registerState.email}
+          onChange={onChange}
+          error={registerState.errors.email}
+          info="This site uses Gravatar, so if you want a profile image, use a
+            Gravatar email"
+        />
+        <TextFieldGroup
+          id="password"
+          type="password"
+          placeholder="Password"
+          value={registerState.password}
+          onChange={onChange}
+          error={registerState.errors.password}
+        />
+        <TextFieldGroup
+          id="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          value={registerState.confirmPassword}
+          onChange={onChange}
+          error={registerState.errors.confirmPassword}
+        />
         <input type="submit" value="Register" className="btn btn-primary" />
       </form>
       <p className="my-1">

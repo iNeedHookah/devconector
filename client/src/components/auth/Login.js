@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { loginUser } from "../../redux/actions/authActions";
+import TextFieldGroup from "../../common/TextFieldGroup";
 
 const Login = () => {
   const auth = useSelector((state) => state.auth);
@@ -61,36 +62,22 @@ const Login = () => {
         </div>
       )}
       <form onSubmit={onSubmit} className="form">
-        <div className="form-group">
-          <input
-            id="email"
-            type="email"
-            placeholder="Email Address"
-            value={loginState.email}
-            onChange={onChange}
-            className={`form-control form-control-lg ${
-              loginState.errors.email ? "is-invalid" : ""
-            }`}
-          />
-          {loginState.errors.email && (
-            <div className="invalid-feedback">{loginState.errors.email}</div>
-          )}
-        </div>
-        <div className="form-group">
-          <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            value={loginState.password}
-            onChange={onChange}
-            className={`form-control form-control-lg ${
-              loginState.errors.password ? "is-invalid" : ""
-            }`}
-          />
-          {loginState.errors.password && (
-            <div className="invalid-feedback">{loginState.errors.password}</div>
-          )}
-        </div>
+        <TextFieldGroup
+          id="email"
+          type="email"
+          placeholder="Email Address"
+          value={loginState.email}
+          onChange={onChange}
+          error={loginState.errors.email}
+        />
+        <TextFieldGroup
+          id="password"
+          type="password"
+          placeholder="Password"
+          value={loginState.password}
+          onChange={onChange}
+          error={loginState.errors.password}
+        />
         <input type="submit" value="Login" className="btn btn-primary" />
       </form>
       <p className="my-1">
