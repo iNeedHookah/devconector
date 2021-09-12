@@ -10,7 +10,7 @@ const Landing = () => {
     if (auth.isAuthenticated) {
       history.push("/dashboard");
     }
-  }, [auth]);
+  }, [auth, history]);
 
   return (
     <section className="landing">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
@@ -29,7 +28,7 @@ const Register = () => {
     if (auth.isAuthenticated) {
       history.push("/dashboard");
     }
-  }, [errors, auth]);
+  }, [errors, auth, history]);
 
   const onChange = (e) => {
     setRegisterState((prevState) => ({
@@ -103,12 +102,6 @@ const Register = () => {
       </p>
     </section>
   );
-};
-
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
 };
 
 export default Register;

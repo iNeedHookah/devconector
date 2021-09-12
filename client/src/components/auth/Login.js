@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { loginUser } from "../../redux/actions/authActions";
@@ -26,7 +25,7 @@ const Login = () => {
     if (auth.isAuthenticated) {
       history.push("/dashboard");
     }
-  }, [errors, auth]);
+  }, [errors, auth, history]);
 
   const onChange = (e) => {
     setLoginState((prevState) => ({
@@ -86,11 +85,4 @@ const Login = () => {
     </section>
   );
 };
-
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-};
-
 export default Login;

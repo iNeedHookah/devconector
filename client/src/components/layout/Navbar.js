@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { logoutUser } from "../../redux/actions/authActions";
 import { useHistory } from "react-router-dom";
+import { clearCurrentProfile } from "../../redux/actions/profileActions";
 
 const Navbar = () => {
   const auth = useSelector((state) => state.auth);
@@ -12,13 +12,14 @@ const Navbar = () => {
 
   const onLogoutClick = (e) => {
     e.preventDefault();
+    dispatch(clearCurrentProfile());
     dispatch(logoutUser(history));
   };
 
   const authLinks = (
     <ul>
       <li>
-        <a href="#" onClick={onLogoutClick} className="nav-link">
+        <a href onClick={onLogoutClick} className="nav-link">
           <img
             src={auth.user.avatar}
             alt={auth.user.name}
@@ -57,11 +58,6 @@ const Navbar = () => {
       {auth.isAuthenticated ? authLinks : guestLinks}
     </nav>
   );
-};
-
-Navbar.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
 };
 
 export default Navbar;
