@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCurrentProfile } from "../../redux/actions/profileActions";
-import Spinner from "../../common/Spiiner";
+import Spinner from "../common/Spinner";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {

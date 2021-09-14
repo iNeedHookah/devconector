@@ -15,7 +15,8 @@ import store from "./redux/store/store";
 import Dashboard from "./components/dashboard/Dashboard";
 import { clearCurrentProfile } from "./redux/actions/profileActions";
 
-import PrivateRoute from "./common/PrivateRoute";
+import PrivateRoute from "./components/common/PrivateRoute";
+import CreateProfile from "./components/create-profile/CreateProfile";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -55,6 +56,9 @@ function App() {
             </Route>
             <PrivateRoute exact path="/dashboard">
               <Dashboard />
+            </PrivateRoute>
+            <PrivateRoute exact path="/create-profile">
+              <CreateProfile />
             </PrivateRoute>
           </div>
           <Footer />
