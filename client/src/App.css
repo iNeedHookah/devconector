@@ -81,7 +81,7 @@
   margin-bottom: 1rem;
 }
 .text-primary {
-  color: #17a2b8;
+  color: #17a2b8 !important;
 }
 .round-img {
   border-radius: 50%;
@@ -117,7 +117,7 @@
   color: #333;
   border: #ccc 1px solid;
 }
-.btn {
+/* .btn {
   display: inline-block;
   background: #f4f4f4;
   color: #333;
@@ -161,7 +161,13 @@
 .btn:hover {
   background: #626d78;
   color: #fff;
+} */
+
+.btn.btn-light {
+  background: rgb(245, 243, 243);
+  margin-right: 0.5rem;
 }
+
 .alert {
   padding: 0.8rem;
   margin: 1rem;

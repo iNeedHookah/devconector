@@ -437,27 +437,27 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const { user } = req;
-    await Profile.findOneAndRemove({ user: user.id }).then(async () => {
-      await User.findOneAndRemove({ _id: user.id })
-        .then(() => {
-          return res
-            .json({
+    await Profile.findOneAndRemove({ user: user.id })
+      .then(async () => {
+        await User.findOneAndRemove({ _id: user.id })
+          .then(() => {
+            return res.json({
               success: true,
-            })
-            .catch((err) => {
-              return res.status(500).json({
-                msg: "Could not delete user",
-                error: err,
-              });
             });
-        })
-        .catch((err) => {
-          return res.status(500).json({
-            msg: "Could not delete profile",
-            error: err,
+          })
+          .catch((err) => {
+            return res.status(500).json({
+              msg: "Could not delete user",
+              error: err,
+            });
           });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          msg: "Could not delete profile",
+          error: err,
         });
-    });
+      });
   }
 );
 
