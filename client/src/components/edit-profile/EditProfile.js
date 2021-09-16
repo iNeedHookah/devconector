@@ -6,24 +6,39 @@ import InputGroup from "../common/InputGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createProfile } from "../../redux/actions/profileActions";
+import {
+  createProfile,
+  getCurrentProfile,
+} from "../../redux/actions/profileActions";
 
-const CreateProfile = () => {
-  const currentProfile = useSelector((state) => state.profile);
+const EditProfile = () => {
+  const currentProfile = useSelector((state) => state.profile.profile);
   const errors = useSelector((state) => state.errors);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    setCreateProfileState((prevState) => ({
+    dispatch(getCurrentProfile());
+
+    setEditProfileState((prevState) => ({
       ...prevState,
       errors: errors,
     }));
-  }, [errors]);
+  }, [errors, dispatch]);
 
-  const [createProfileState, setCreateProfileState] = useState({
-    displaySocialInputs: false,
+  useEffect(() => {
+    if (currentProfile !== null) {
+      setEditProfileState((prevState) => ({
+        ...prevState,
+        ...currentProfile,
+        ...currentProfile.socials,
+      }));
+    }
+  }, [currentProfile]);
+
+  const [editProfileState, setEditProfileState] = useState({
+    displaySocialInputs: true,
     handle: "",
     company: "",
     website: "",
@@ -88,37 +103,37 @@ const CreateProfile = () => {
     e.preventDefault();
 
     const postData = {
-      handle: createProfileState.handle,
-      company: createProfileState.company,
-      website: createProfileState.website,
-      location: createProfileState.location,
-      status: createProfileState.status,
-      skills: createProfileState.skills,
-      githubusername: createProfileState.githubusername,
-      bio: createProfileState.bio,
-      twitter: createProfileState.twitter,
-      facebook: createProfileState.facebook,
-      instagram: createProfileState.instagram,
-      youtube: createProfileState.youtube,
-      linkedin: createProfileState.linkedin,
+      handle: editProfileState.handle,
+      company: editProfileState.company,
+      website: editProfileState.website,
+      location: editProfileState.location,
+      status: editProfileState.status,
+      skills: editProfileState.skills,
+      githubusername: editProfileState.githubusername,
+      bio: editProfileState.bio,
+      twitter: editProfileState.twitter,
+      facebook: editProfileState.facebook,
+      instagram: editProfileState.instagram,
+      youtube: editProfileState.youtube,
+      linkedin: editProfileState.linkedin,
     };
 
     dispatch(createProfile(postData, history));
   };
 
   const onChange = (e) => {
-    setCreateProfileState((prevState) => ({
+    setEditProfileState((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
 
-    Object.keys(createProfileState.errors).forEach(
-      () => (createProfileState.errors[e.target.id] = undefined)
+    Object.keys(editProfileState.errors).forEach(
+      () => (editProfileState.errors[e.target.id] = undefined)
     );
   };
 
   let socialInputs;
-  if (createProfileState.displaySocialInputs) {
+  if (editProfileState.displaySocialInputs) {
     socialInputs = (
       <div>
         <InputGroup
@@ -126,45 +141,45 @@ const CreateProfile = () => {
           name="twitter"
           id="twitter"
           icon="fab fa-twitter"
-          value={createProfileState.twitter}
+          value={editProfileState.twitter}
           onChange={onChange}
-          error={createProfileState.errors.twitter}
+          error={editProfileState.errors.twitter}
         />
         <InputGroup
           placeholder="Facebook profile URL"
           name="facebook"
           id="facebook"
           icon="fab fa-facebook"
-          value={createProfileState.facebook}
+          value={editProfileState.facebook}
           onChange={onChange}
-          error={createProfileState.errors.facebook}
+          error={editProfileState.errors.facebook}
         />
         <InputGroup
           placeholder="LinkedIn profile URL"
           name="linkedin"
           id="linkedin"
           icon="fab fa-linkedin"
-          value={createProfileState.linkedin}
+          value={editProfileState.linkedin}
           onChange={onChange}
-          error={createProfileState.errors.linkedin}
+          error={editProfileState.errors.linkedin}
         />
         <InputGroup
           placeholder="YouTube profile URL"
           name="youtube"
           id="youtube"
           icon="fab fa-youtube"
-          value={createProfileState.youtube}
+          value={editProfileState.youtube}
           onChange={onChange}
-          error={createProfileState.errors.youtube}
+          error={editProfileState.errors.youtube}
         />
         <InputGroup
           placeholder="Instagram profile URL"
           name="instagram"
           id="instagram"
           icon="fab fa-instagram"
-          value={createProfileState.instagram}
+          value={editProfileState.instagram}
           onChange={onChange}
-          error={createProfileState.errors.instagram}
+          error={editProfileState.errors.instagram}
         />
       </div>
     );
@@ -175,27 +190,24 @@ const CreateProfile = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Create your profile</h1>
-            <p className="lead text-center">
-              Let's get some informations to make your profile stand out
-            </p>
+            <h1 className="display-4 text-center">Edit your profile</h1>
             <small className="d-block pb-3">* = required fields</small>
             <form onSubmit={onSubmit}>
               <TextFieldGroup
                 id="handle"
                 name="handle"
                 placeholder="* Profile Handle"
-                value={createProfileState.handle}
+                value={editProfileState.handle}
                 onChange={onChange}
-                error={createProfileState.errors.handle}
+                error={editProfileState.errors.handle}
                 info="A unique handle for your profile URL"
               />
               <SelectListGroup
                 id="status"
                 name="status"
-                value={createProfileState.status}
+                value={editProfileState.status}
                 onChange={onChange}
-                error={createProfileState.errors.status}
+                error={editProfileState.errors.status}
                 options={options}
                 info="Give us an idea of where you are at in your carrer"
               />
@@ -203,61 +215,61 @@ const CreateProfile = () => {
                 id="company"
                 name="company"
                 placeholder="Company"
-                value={createProfileState.company}
+                value={editProfileState.company}
                 onChange={onChange}
-                error={createProfileState.errors.company}
+                error={editProfileState.errors.company}
                 info="Could be your own company or one you work for"
               />
               <TextFieldGroup
                 id="website"
                 name="website"
                 placeholder="Website"
-                value={createProfileState.website}
+                value={editProfileState.website}
                 onChange={onChange}
-                error={createProfileState.errors.website}
+                error={editProfileState.errors.website}
                 info="Could be your own website or company website"
               />
               <TextFieldGroup
                 id="location"
                 name="location"
                 placeholder="Location"
-                value={createProfileState.location}
+                value={editProfileState.location}
                 onChange={onChange}
-                error={createProfileState.errors.location}
+                error={editProfileState.errors.location}
                 info="City or city & state suggested (eg. Boston, MA)"
               />
               <TextFieldGroup
                 id="skills"
                 name="skills"
                 placeholder="* Skills"
-                value={createProfileState.skills}
+                value={editProfileState.skills}
                 onChange={onChange}
-                error={createProfileState.errors.skills}
+                error={editProfileState.errors.skills}
                 info="Please use comma separated values (eg. HTML,CSS,React,Node.js)"
               />
               <TextFieldGroup
                 id="githubusername"
                 name="githubusername"
                 placeholder="Github username"
-                value={createProfileState.githubusername}
+                value={editProfileState.githubusername}
                 onChange={onChange}
-                error={createProfileState.errors.githubusername}
+                error={editProfileState.errors.githubusername}
                 info="If you want your latest repos and a Github link, include your username"
               />
               <TextAreaFieldGroup
                 id="bio"
                 name="bio"
                 placeholder="Short bio"
-                value={createProfileState.bio}
+                value={editProfileState.bio}
                 onChange={onChange}
-                error={createProfileState.errors.bio}
+                error={editProfileState.errors.bio}
                 info="Tell us a little about yourself"
               />
               <div className="mb-3">
                 <button
                   type="button"
                   onClick={() => {
-                    setCreateProfileState((prevState) => ({
+                    setEditProfileState((prevState) => ({
                       ...prevState,
                       displaySocialInputs: !prevState.displaySocialInputs,
                     }));
@@ -282,4 +294,4 @@ const CreateProfile = () => {
   );
 };
 
-export default CreateProfile;
+export default EditProfile;

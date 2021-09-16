@@ -17,6 +17,9 @@ import { clearCurrentProfile } from "./redux/actions/profileActions";
 
 import PrivateRoute from "./components/common/PrivateRoute";
 import CreateProfile from "./components/create-profile/CreateProfile";
+import EditProfile from "./components/edit-profile/EditProfile";
+import AddExperience from "./components/add-credentials/AddExperience";
+import AddEducation from "./components/add-credentials/AddEducation";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -59,6 +62,15 @@ function App() {
             </PrivateRoute>
             <PrivateRoute exact path="/create-profile">
               <CreateProfile />
+            </PrivateRoute>
+            <PrivateRoute exact path="/edit-profile">
+              <EditProfile />
+            </PrivateRoute>
+            <PrivateRoute exact path="/add-experience">
+              <AddExperience />
+            </PrivateRoute>
+            <PrivateRoute exact path="/add-education">
+              <AddEducation />
             </PrivateRoute>
           </div>
           <Footer />

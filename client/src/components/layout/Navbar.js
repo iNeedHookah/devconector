@@ -19,6 +19,11 @@ const Navbar = () => {
   const authLinks = (
     <ul>
       <li>
+        <Link className="nav-link" to="/dashboard">
+          Dashboard
+        </Link>
+      </li>
+      <li>
         <a href onClick={onLogoutClick} className="nav-link">
           <img
             src={auth.user.avatar}
