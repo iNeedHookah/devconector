@@ -85,6 +85,42 @@ export const addEducation = (eduData, history) => (dispatch) => {
     });
 };
 
+// Delete experience
+export const deleteExperience = (experienceId) => (dispatch) => {
+  axios
+    .delete(`/api/profile/experience/${experienceId}`)
+    .then((res) => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+// Delete education
+export const deleteEducation = (educationId) => (dispatch) => {
+  axios
+    .delete(`/api/profile/education/${educationId}`)
+    .then((res) => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
 // Delete account & profile
 export const deleteAccount = () => (dispatch) => {
   if (

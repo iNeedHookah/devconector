@@ -7,6 +7,8 @@ import {
 import Spinner from "../common/Spinner";
 import { Link } from "react-router-dom";
 import ProfileActions from "./ProfileActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Dashboard = () => {
     dispatch(getCurrentProfile());
   }, [dispatch]);
 
-  const onDeleteClick = (e) => {
+  const onDeleteClick = () => {
     dispatch(deleteAccount());
   };
 
@@ -36,7 +38,8 @@ const Dashboard = () => {
               {auth.user.name}
             </Link>
             <ProfileActions />
-            // TODO: Experience and education
+            <Experience experience={currentProfile.profile.experience} />
+            <Education education={currentProfile.profile.education} />
             <div style={{ marginBottom: "60px" }} />
             <button onClick={onDeleteClick} className="btn btn-danger">
               Delete my account
