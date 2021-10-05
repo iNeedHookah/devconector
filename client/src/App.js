@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { logoutUser, setCurrentUser } from "./redux/actions/authActions";
@@ -20,6 +20,8 @@ import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import AddExperience from "./components/add-credentials/AddExperience";
 import AddEducation from "./components/add-credentials/AddEducation";
+import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profile/Profile";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -44,38 +46,42 @@ if (localStorage.jwtToken) {
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Route exact path="/">
-            <Landing />
+      <div className="App">
+        <Navbar />
+        <Route exact path="/">
+          <Landing />
+        </Route>
+        <div className="container">
+          <Route exact path="/register">
+            <Register />
           </Route>
-          <div className="container">
-            <Route exact path="/register">
-              <Register />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <PrivateRoute exact path="/dashboard">
-              <Dashboard />
-            </PrivateRoute>
-            <PrivateRoute exact path="/create-profile">
-              <CreateProfile />
-            </PrivateRoute>
-            <PrivateRoute exact path="/edit-profile">
-              <EditProfile />
-            </PrivateRoute>
-            <PrivateRoute exact path="/add-experience">
-              <AddExperience />
-            </PrivateRoute>
-            <PrivateRoute exact path="/add-education">
-              <AddEducation />
-            </PrivateRoute>
-          </div>
-          <Footer />
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <PrivateRoute exact path="/dashboard">
+            <Dashboard />
+          </PrivateRoute>
+          <PrivateRoute exact path="/create-profile">
+            <CreateProfile />
+          </PrivateRoute>
+          <PrivateRoute exact path="/edit-profile">
+            <EditProfile />
+          </PrivateRoute>
+          <PrivateRoute exact path="/add-experience">
+            <AddExperience />
+          </PrivateRoute>
+          <PrivateRoute exact path="/add-education">
+            <AddEducation />
+          </PrivateRoute>
+          <Route exact path="/profiles">
+            <Profiles />
+          </Route>
+          <Route exact path="/profile/:handle">
+            <Profile />
+          </Route>
         </div>
-      </Router>
+        <Footer />
+      </div>
     </Provider>
   );
 }
